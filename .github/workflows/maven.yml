@@ -39,7 +39,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       # run: mvn -B package --file resource_server/pom.xml
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=capstone-group4-project1
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=capstone-group4-project1 --file resource_server/pom.xml
     - name: Build Authorization Server With Maven
       # run: mvn -B package --file authorization_server/pom.xml
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=capstone-group4-project1
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=capstone-group4-project1 --file authorization_server/pom.xml
