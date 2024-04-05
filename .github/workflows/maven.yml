@@ -39,10 +39,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=capstone-group4-project1-backend -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco-aggregate-all/jacoco.xml --file resource_server/pom.xml
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=capstone-group4-project1-backend -Dsonar.coverage.jacoco.xmlReportPaths=${project.testresult.directory}/coverage/jacoco/jacoco.xml --file resource_server/pom.xml
     - name: Build and analyze oAUth Server with Maven
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=capstone-group4-project1 -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco-aggregate-all/jacoco.xml --file authorization_server/pom.xml
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=capstone-group4-project1 -Dsonar.coverage.jacoco.xmlReportPaths=${project.testresult.directory}/coverage/jacoco/jacoco.xml --file authorization_server/pom.xml
