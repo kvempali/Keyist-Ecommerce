@@ -4,9 +4,8 @@
 name: Java CI with Maven
 
 on:
-  workflow_dispatch:
-  # push:
-  #   branches: [ master ]
+   push:
+     branches: [ master ]
 
 jobs:
   build:
@@ -22,18 +21,6 @@ jobs:
         distribution: 'temurin'
         architecture: x64
         cache: maven
-    # - name: Cache SonarQube packages
-    #   uses: actions/cache@v1
-    #   with:
-    #     path: ~/.sonar/cache
-    #     key: ${{ runner.os }}-sonar
-    #     restore-keys: ${{ runner.os }}-sonar
-    # - name: Cache Maven packages
-    #   uses: actions/cache@v1
-    #   with:
-    #     path: ~/.m2
-    #     key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-    #     restore-keys: ${{ runner.os }}-m2
     - name: Build & analyse Resource Server with Maven
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -51,12 +38,6 @@ jobs:
       needs: build
       runs-on: self-hosted
       steps:
-        # -
-        #   name: Checkout
-        #   uses: actions/checkout@v4
-        # -
-        #   name: Set up QEMU
-        #   uses: docker/setup-qemu-action@v3
         -
           name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v3
