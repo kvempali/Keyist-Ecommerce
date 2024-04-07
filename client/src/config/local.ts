@@ -2,8 +2,8 @@ import { Configuration } from './model';
 
 
 export const config: Configuration = {
-  apiUrl: 'http://localhost:8080',
-  authUrl: 'http://localhost:8081',
+  apiUrl: 'http://resource_server:8080',
+  authUrl: 'http://authorization_server:8081',
   clientId: 'test',
   clientSecret: 'test',
   carausel: [
