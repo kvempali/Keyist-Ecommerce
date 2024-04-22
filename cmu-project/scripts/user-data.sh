@@ -13,6 +13,3 @@ systemctl enable docker  # Ensure Docker starts on boot
 
 # Install Docker Compose
 apt-get -y install docker-compose
-
-# give default user access to docker
-usermod -aG docker $USER
