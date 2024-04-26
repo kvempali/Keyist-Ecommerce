@@ -28,9 +28,9 @@ spring:
         format_sql: true
   mail:
     host: smtp.gmail.com
-    host_address: host_address
-    username: username
-    password: password
+    host_address: donot-reply@keyist.com
+    username: cmudevops.capstonegroup4@gmail.com
+    password: Cap$tonegrp4
     port: 587
     properties:
       mail:
