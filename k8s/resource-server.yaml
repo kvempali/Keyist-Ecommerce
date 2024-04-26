@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+ name: resource-service
+ labels:
+   app: keyist-resource-server
+spec:
+ type: NodePort
+ ports:
+ - port: 8080
+   nodePort: 30080
+ selector:
+   app: keyist-resource-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: keyist-resource-server
+ labels:
+   app: keyist-resource-server
+spec:
+ replicas: 2
+ selector:
+   matchLabels:
+     app: keyist-resource-server
+ template:
+   metadata:
+     labels:
+       app: keyist-resource-server
+   spec:
+     containers:
+     - name: keyist-resource-server
+       image: kvempali/keyist-resource-server:latest
+       imagePullPolicy: Always
+       ports:
+       - containerPort: 8080
+       env:
+       - name: SPRING_DATASOURCE_URL
+         value: jdbc:mysql://db:3306/keyist?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+       - name: SPRING_DATASOURCE_USERNAME
+         value: keyistuser
+       - name: SPRING_DATASOURCE_PASSWORD
+         value: keyistpassword
+       - name: SECURITY_AUTH_URL
+         value: http://auth_service:8081/oauth/check_token
+       - name: SECURITY_AUTH_CLIENT_ID
+         value: Test
+       - name: SECURITY_AUTH_CLIENT_PASSWORD
+         value: test

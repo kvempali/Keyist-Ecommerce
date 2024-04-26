@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+ name: client-service
+ labels:
+   app: keyist-cleint
+spec:
+ type: NodePort
+ ports:
+ - port: 80
+   nodePort: 30800
+ selector:
+   app: keyist-client
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: keyist-client
+ labels:
+   app: keyist-client
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: keyist-client
+ template:
+   metadata:
+     labels:
+       app: keyist-client
+   spec:
+     containers:
+     - name: keyist-client
+       image: kvempali/keyist-client:latest
+       imagePullPolicy: Always
+       ports:
+       - containerPort: 80
