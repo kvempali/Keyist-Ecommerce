@@ -1,4 +1,4 @@
-# db_username = "admin"
-# db_password = "admin123"
-access_key = ""
-secret_key = ""
+db-username = "admin"
+db-password = "admin123"
+# access_key  = ""
+# secret_key  = ""
