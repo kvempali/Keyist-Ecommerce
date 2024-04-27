@@ -1,8 +1,8 @@
 output "control_plane_ip" {
-  value = aws_instance.kubeadm_demo_control_plane.public_ip
+  value = data.aws_eip.control_plane_eip.public_ip
 }
 
 output "worker_nodes_ip" {
-  value = join("", aws_instance.kubeadm_demo_worker_nodes[*].public_ip)
+  value = [for instance in data.aws_eip.worker_node_eips : instance.public_ip]
 }
 

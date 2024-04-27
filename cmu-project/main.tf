@@ -37,7 +37,7 @@ resource "aws_vpc" "kubeadm_demo_vpc" {
 resource "aws_subnet" "kubeadm_demo_subnet" {
   vpc_id                  = aws_vpc.kubeadm_demo_vpc.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone       = "ap-south-1a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -47,9 +47,9 @@ resource "aws_subnet" "kubeadm_demo_subnet" {
 }
 
 resource "aws_subnet" "kubeadm_demo_subnet2" {
-  vpc_id            = aws_vpc.kubeadm_demo_vpc.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = "ap-south-1b"  # Specify AZ for subnet2
+  vpc_id                  = aws_vpc.kubeadm_demo_vpc.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "ap-south-1b" # Specify AZ for subnet2
   map_public_ip_on_launch = true
 
   tags = {
@@ -91,7 +91,7 @@ resource "aws_route_table_association" "kubeadm_demo_route_association2" {
 }
 
 resource "aws_security_group" "kubeadm_demo_sg_flannel" {
-  name = "flannel-overlay-backend"
+  name   = "flannel-overlay-backend"
   vpc_id = aws_vpc.kubeadm_demo_vpc.id
   tags = {
     Name = "Flannel Overlay backend"
@@ -116,7 +116,7 @@ resource "aws_security_group" "kubeadm_demo_sg_flannel" {
 }
 
 resource "aws_security_group" "kubadm_demo_sg_common" {
-  name = "common-ports"
+  name   = "common-ports"
   vpc_id = aws_vpc.kubeadm_demo_vpc.id
   tags = {
     Name = "common ports"
@@ -156,8 +156,8 @@ resource "aws_security_group" "kubadm_demo_sg_common" {
 
 }
 resource "aws_security_group" "kubeadm_demo_sg_control_plane" {
-  name = "kubeadm-control-plane security group"
-  vpc_id      = aws_vpc.kubeadm_demo_vpc.id
+  name   = "kubeadm-control-plane security group"
+  vpc_id = aws_vpc.kubeadm_demo_vpc.id
   ingress {
     description = "API Server"
     protocol    = "tcp"
@@ -205,8 +205,8 @@ resource "aws_security_group" "kubeadm_demo_sg_control_plane" {
 
 
 resource "aws_security_group" "kubeadm_demo_sg_worker_nodes" {
-  name = "kubeadm-worker-node security group"
-  vpc_id      = aws_vpc.kubeadm_demo_vpc.id
+  name   = "kubeadm-worker-node security group"
+  vpc_id = aws_vpc.kubeadm_demo_vpc.id
   ingress {
     description = "kubelet API"
     protocol    = "tcp"
@@ -250,12 +250,12 @@ resource "aws_key_pair" "kubeadm_demo_key_pair" {
 }
 
 resource "aws_instance" "kubeadm_demo_control_plane" {
-  ami                         = data.aws_ami.latest_ubuntu.id
-  instance_type               = var.instance-type
-  availability_zone           = var.availability-zone-1
-  key_name                    = aws_key_pair.kubeadm_demo_key_pair.key_name
-  associate_public_ip_address = false
-  subnet_id              = aws_subnet.kubeadm_demo_subnet.id
+  ami               = data.aws_ami.latest_ubuntu.id
+  instance_type     = var.instance-type
+  availability_zone = var.availability-zone-1
+  key_name          = aws_key_pair.kubeadm_demo_key_pair.key_name
+  #associate_public_ip_address = true
+  subnet_id = aws_subnet.kubeadm_demo_subnet.id
   security_groups = [
     aws_security_group.kubadm_demo_sg_common.id,
     aws_security_group.kubeadm_demo_sg_flannel.id,
@@ -267,31 +267,31 @@ resource "aws_instance" "kubeadm_demo_control_plane" {
     volume_size = var.ec2-volume-size
   }
 
+  # Associate with the pre-allocated Elastic IP
+  #network_interface {
+  #  network_interface_id = data.aws_eip.control_plane_eip.network_interface_id  # Use the network interface ID of the Elastic IP
+  #  device_index = 0 # Set this to 0 if it's the primary network interface
+  #}
+
   tags = {
     Name = "Kubeadm Master"
     Role = "Control plane node"
   }
 
   provisioner "local-exec" {
-    command = "echo 'master ${self.public_ip}' >> ./files/hosts"
+    command = "echo 'master ${data.aws_eip.control_plane_eip.public_ip}' >> ./files/hosts"
   }
-
-  # provisioner "remote-exec" {
-  #   inline = ["echo ${aws_eip.elastic_ips[count.index].public_ip} > ~/eip.txt"]
-  # }
-
 }
 
 resource "aws_instance" "kubeadm_demo_worker_nodes" {
-  count                       = var.worker_nodes_count
-  ami                         = data.aws_ami.latest_ubuntu.id
-  instance_type               = var.instance-type
-  key_name                    = aws_key_pair.kubeadm_demo_key_pair.key_name
-  associate_public_ip_address = false
-  
+  count         = var.worker_nodes_count
+  ami           = data.aws_ami.latest_ubuntu.id
+  instance_type = var.instance-type
+  key_name      = aws_key_pair.kubeadm_demo_key_pair.key_name
+  # associate_public_ip_address = false
   // Determine subnet ID based on the index of the worker node
   subnet_id = count.index % 2 == 0 ? aws_subnet.kubeadm_demo_subnet.id : aws_subnet.kubeadm_demo_subnet2.id
-  
+
   security_groups = [
     aws_security_group.kubeadm_demo_sg_flannel.id,
     aws_security_group.kubadm_demo_sg_common.id,
@@ -303,13 +303,19 @@ resource "aws_instance" "kubeadm_demo_worker_nodes" {
     volume_size = var.ec2-volume-size
   }
 
+  # Associate with the pre-allocated Elastic IP
+  #network_interface {
+  #  network_interface_id = data.aws_eip.worker_node_eips[count.index].id
+  #  device_index         = 0
+  #}
+
   tags = {
     Name = "Kubeadm Worker ${count.index}"
     Role = "Worker node"
   }
 
   provisioner "local-exec" {
-    command = "echo 'worker-${count.index} ${self.public_ip}' >> ./files/hosts"
+    command = "echo 'worker-${count.index} ${data.aws_eip.worker_node_eips[count.index].public_ip}' >> ./files/hosts"
   }
 
   # provisioner "remote-exec" {
@@ -346,24 +352,24 @@ resource "ansible_host" "kubadm_demo_worker_nodes_host" {
   }
 }
 
-resource "aws_eip" "control_plane_eip" {
-  instance = aws_instance.kubeadm_demo_control_plane.id
-}
+#resource "aws_eip" "control_plane_eip" {
+#  instance = aws_instance.kubeadm_demo_control_plane.id
+#}
 
-resource "aws_eip" "worker_nodes_eip" {
-  count = var.worker_nodes_count
-  instance = aws_instance.kubeadm_demo_worker_nodes[count.index].id
-}
+#resource "aws_eip" "worker_nodes_eip" {
+#  count = var.worker_nodes_count
+#  instance = aws_instance.kubeadm_demo_worker_nodes[count.index].id
+#}
 
 
 resource "aws_eip_association" "control_plane_eip_association" {
   instance_id   = aws_instance.kubeadm_demo_control_plane.id
-  allocation_id = aws_eip.control_plane_eip.id
+  allocation_id = data.aws_eip.control_plane_eip.id
 }
 
 resource "aws_eip_association" "worker_nodes_eip_association" {
-  count        = var.worker_nodes_count
-  instance_id  = aws_instance.kubeadm_demo_worker_nodes[count.index].id
-  allocation_id = aws_eip.worker_nodes_eip[count.index].id
+  count         = var.worker_nodes_count
+  instance_id   = aws_instance.kubeadm_demo_worker_nodes[count.index].id
+  allocation_id = data.aws_eip.worker_node_eips[count.index].id
 }
 

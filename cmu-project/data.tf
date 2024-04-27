@@ -14,3 +14,20 @@ data "aws_ami" "latest_ubuntu" {
     values = ["hvm"]
   }
 }
+
+# Data block to retrieve pre-allocated Elastic IP for the control plane
+data "aws_eip" "control_plane_eip" {
+  filter {
+    name   = "tag:Environment"
+    values = ["control_plane_eip"]
+  }
+}
+
+# Data block to retrieve Elastic IPs for worker nodes
+data "aws_eip" "worker_node_eips" {
+  count = var.worker_nodes_count
+  filter {
+    name   = "tag:Environment"
+    values = ["worker_node_eip_${count.index + 1}"]
+  }
+}

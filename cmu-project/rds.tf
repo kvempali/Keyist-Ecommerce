@@ -13,15 +13,15 @@ resource "aws_db_instance" "rds-1" {
 }
 
 resource "aws_db_subnet_group" "subnet-grp" {
-  name        = var.db-subnet
-  subnet_ids  = [aws_subnet.kubeadm_demo_subnet.id,aws_subnet.kubeadm_demo_subnet2.id]  # Adjust this to include your desired subnets
+  name       = var.db-subnet
+  subnet_ids = [aws_subnet.kubeadm_demo_subnet.id, aws_subnet.kubeadm_demo_subnet2.id] # Adjust this to include your desired subnets
 }
 
 
 resource "aws_security_group" "db-sg" {
   name        = var.db-sg-name
   description = "Allow tls for inbound traffic"
-  vpc_id = aws_vpc.kubeadm_demo_vpc.id
+  vpc_id      = aws_vpc.kubeadm_demo_vpc.id
 
   ingress {
     from_port = 3306
