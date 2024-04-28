@@ -47,7 +47,7 @@ jobs:
           cd cmu-project
           terraform fmt
           terraform init
-          terraform destroy -var-file="secrets.tfvars"
+          terraform destroy -var-file="secrets.tfvars" -auto-approve
   # terraform-deploy:
   #   name: 'Terraform-Deploy'
   #   needs: terraform-plan
