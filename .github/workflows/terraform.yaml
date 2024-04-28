@@ -15,7 +15,7 @@ on:
 jobs:
   terraform-plan:
     name: 'continuous-integration'
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     environment: production
     permissions:
       contents: read
