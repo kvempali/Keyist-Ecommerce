@@ -48,6 +48,8 @@ jobs:
           terraform fmt
           terraform init
           terraform destroy -var-file="secrets.tfvars" -auto-approve
+          terraform plan -var-file="secrets.tfvars" -auto-approve
+          terraform apply -var-file="secrets.tfvars" -auto-approve
   # terraform-deploy:
   #   name: 'Terraform-Deploy'
   #   needs: terraform-plan
