@@ -10,6 +10,7 @@ resource "aws_db_instance" "rds-1" {
   db_subnet_group_name   = aws_db_subnet_group.subnet-grp.name
   vpc_security_group_ids = [aws_security_group.db-sg.id]
   skip_final_snapshot    = true
+  publicly_accessible = true
 }
 
 resource "aws_db_subnet_group" "subnet-grp" {
@@ -27,11 +28,12 @@ resource "aws_security_group" "db-sg" {
     from_port = 3306
     to_port   = 3306
     protocol  = "tcp"
-    security_groups = [
-      aws_security_group.kubadm_demo_sg_common.id,
+    cidr_blocks = ["0.0.0.0/0"]
+    #security_groups = [
+    #  aws_security_group.kubadm_demo_sg_common.id,
       # aws_security_group.kubeadm_demo_sg_flannel.id,
-      aws_security_group.kubeadm_demo_sg_control_plane.id,
-    ]
+    #  aws_security_group.kubeadm_demo_sg_control_plane.id,
+    #]
   }
 
   egress {
@@ -46,3 +48,11 @@ resource "aws_security_group" "db-sg" {
     Name = var.db-sg-name
   }
 }
+
+resource "null_resource" "example" {
+  depends_on = [aws_db_instance.rds-1]
+  provisioner "local-exec" {
+    command = "/bin/bash ./k8s_nodes_pre_steps.sh"
+   }
+ }
+

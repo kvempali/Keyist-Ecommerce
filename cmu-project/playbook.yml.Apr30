@@ -126,20 +126,6 @@
           #state: present
           #filename: kubernetes
 
-    - name: copy gpg key and kube repo script
-      ansible.builtin.copy:
-        backup: true
-        src: ./files/kubernetes_repo.sh
-        dest: /home/ubuntu
-        mode: "0755"
-
-    - name: Execute script
-      shell: ./kubernetes_repo.sh
-    
-    - name: update
-      apt:
-        update_cache: yes
-
     - name: Install kubadm, kubectl, kubelet
       ansible.builtin.apt:
         pkg:
@@ -192,18 +178,3 @@
   tasks:
     - name: add worker nodes to cluster
       shell: "sudo {{ hostvars['control_plane'].join_node }}"
-
-- name: Set master kubeconfig
-  hosts: master
-  become: true
-  tasks:
-    - name: copy and set kubconfig home dir script
-      ansible.builtin.copy:
-        backup: true
-        src: ./files/set_kubeconfig.sh
-        dest: /home/ubuntu
-        mode: "0755"
-
-    - name: Execute script
-      shell: ./set_kubeconfig.sh
-

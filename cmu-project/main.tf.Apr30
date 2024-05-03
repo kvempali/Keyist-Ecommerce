@@ -244,11 +244,10 @@ resource "aws_key_pair" "kubeadm_demo_key_pair" {
   public_key = tls_private_key.kubadm_demo_private_key.public_key_openssh
 
   provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-    command = "echo '${tls_private_key.kubadm_demo_private_key.private_key_pem}' > ./private-key.pem" 
+    command = "echo '${tls_private_key.kubadm_demo_private_key.private_key_pem}' > ./private-key.pem"
   }
+
 }
-
-
 
 resource "aws_instance" "kubeadm_demo_control_plane" {
   ami               = data.aws_ami.latest_ubuntu.id
@@ -374,20 +373,5 @@ resource "aws_eip_association" "worker_nodes_eip_association" {
   count         = var.worker_nodes_count
   instance_id   = aws_instance.kubeadm_demo_worker_nodes[count.index].id
   allocation_id = data.aws_eip.worker_node_eips[count.index].id
-
-  provisioner "local-exec" {
-  command = "/bin/bash ./post_steps.sh"
-  when    = destroy
-  }
-
 }
-
-#resource "null_resource" "example" {
-#  provisioner "local-exec" {
-#    command = "/bin/bash ./post_steps.sh"
-#    when    = "destroy"
-#   }
-# }
-
-
 
