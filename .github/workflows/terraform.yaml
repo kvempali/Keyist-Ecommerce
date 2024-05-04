@@ -15,7 +15,7 @@ on:
 jobs:
   terraform-plan:
     name: 'continuous-integration'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: production
     permissions:
       contents: read
@@ -50,6 +50,10 @@ jobs:
           terraform destroy -var-file="secrets.tfvars" -auto-approve
           terraform plan -var-file="secrets.tfvars"
           terraform apply -var-file="secrets.tfvars" -auto-approve
+      - name: Run Ansible
+        run: |
+          cd cmu-project
+          ansible-playbook -i inventory.yml playbook.yml
   # terraform-deploy:
   #   name: 'Terraform-Deploy'
   #   needs: terraform-plan
