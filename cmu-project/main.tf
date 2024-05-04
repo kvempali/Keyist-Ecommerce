@@ -262,6 +262,7 @@ resource "aws_instance" "kubeadm_demo_control_plane" {
     aws_security_group.kubeadm_demo_sg_flannel.id,
     aws_security_group.kubeadm_demo_sg_control_plane.id,
     aws_security_group.db-sg.id,
+    aws_security_group.sonarqube_sg.id,
   ]
   root_block_device {
     volume_type = var.ec2-volume-type
@@ -298,6 +299,7 @@ resource "aws_instance" "kubeadm_demo_worker_nodes" {
     aws_security_group.kubadm_demo_sg_common.id,
     aws_security_group.kubeadm_demo_sg_worker_nodes.id,
     aws_security_group.db-sg.id,
+    aws_security_group.sonarqube_sg.id,
   ]
   root_block_device {
     volume_type = var.ec2-volume-type
