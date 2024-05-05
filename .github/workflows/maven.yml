@@ -71,20 +71,20 @@ jobs:
           with:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
-        # -
-        #   name: Build and push Resource Server
-        #   uses: docker/build-push-action@v5
-        #   with:
-        #     context: ./resource_server
-        #     push: true
-        #     tags: kvempali/keyist-resource-server:latest
-        # -
-        #   name: Build and push Auth Server
-        #   uses: docker/build-push-action@v5
-        #   with:
-        #     context: ./authorization_server
-        #     push: true
-        #     tags: kvempali/keyist-authorization-server:latest
+        -
+          name: Build and push Resource Server
+          uses: docker/build-push-action@v5
+          with:
+            context: ./resource_server
+            push: true
+            tags: kvempali/keyist-resource-server:latest
+        -
+          name: Build and push Auth Server
+          uses: docker/build-push-action@v5
+          with:
+            context: ./authorization_server
+            push: true
+            tags: kvempali/keyist-authorization-server:latest
         -
           name: Build and push UI Client
           uses: docker/build-push-action@v5
