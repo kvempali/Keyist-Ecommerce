@@ -20,11 +20,9 @@ jobs:
          - uses: azure/setup-kubectl@v4
 
          # Set the target AKS cluster.
-         - uses: Azure/aks-set-context@v4
+         - uses: azure/k8s-actions/k8s-set-context@master
            with:
-              creds: '${{ secrets.KUBECONFIG }}'
-              cluster-name: kubernetes
-              # resource-group: contoso-rg
+              kubeconfig: ${{secrets.KUBECONFIG}}
          - uses: Azure/k8s-deploy@v5
            with:
               action: deploy
