@@ -27,21 +27,21 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
   mail:
-    host: smtp-relay.brevo.com
-    host_address: donot-reply@keyist.com
-    username: krishna.vempali@gmail.com
-    password: PyRQX7Ws0gIS8G5K
-    port: 587
-    properties:
-      mail:
-        smtp:
-          auth: true
-          connectiontimeout: 5000
-          starttls:
-            enable: true
-            required: true
-          timeout: 5000
-          writetimeout: 5000
+    host: keyist-resource-server-56bc8bd69-w969t 
+    # host_address: donot-reply@keyist.com
+    # username: krishna.vempali@gmail.com
+    # password: PyRQX7Ws0gIS8G5K
+    port: 25
+    # properties:
+    #   mail:
+    #     smtp:
+    #       auth: true
+    #       connectiontimeout: 5000
+    #       starttls:
+    #         enable: true
+    #         required: true
+    #       timeout: 5000
+    #       writetimeout: 5000
     protocol: smtp
   mvc:
     throw-exception-if-no-handler-found: true
