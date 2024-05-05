@@ -27,10 +27,10 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
   mail:
-    host: smtp.gmail.com
+    host: smtp-relay.brevo.com
     host_address: donot-reply@keyist.com
-    username: cmudevops.capstonegroup4@gmail.com
-    password: Cap$tonegrp4
+    username: krishna.vempali@gmail.com
+    password: PyRQX7Ws0gIS8G5K
     port: 587
     properties:
       mail:
