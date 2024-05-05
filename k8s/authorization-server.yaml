@@ -36,8 +36,8 @@ spec:
        - containerPort: 8081
        env:
        - name: SPRING_DATASOURCE_URL
-         value: jdbc:mysql://db:3306/keyist?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+         value: jdbc:mysql://terraform-20240504141735184500000004.cvs4iqugy8m9.ap-south-1.rds.amazonaws.com:3306/keyist?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
        - name: SPRING_DATASOURCE_USERNAME
-         value: keyistuser
+         value: admin
        - name: SPRING_DATASOURCE_PASSWORD
-         value: keyistpassword
+         value: admin123
