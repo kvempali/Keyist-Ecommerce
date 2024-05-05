@@ -23,6 +23,8 @@ jobs:
          - uses: azure/k8s-actions/k8s-set-context@master
            with:
               kubeconfig: ${{secrets.KUBECONFIG}}
+           env:
+              ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
          - uses: Azure/k8s-deploy@v5
            with:
               action: deploy
