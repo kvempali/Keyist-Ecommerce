@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+
+jobs:
+   deploy:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@v4
+
+         # - uses: Azure/docker-login@v1
+         #   with:
+         #      login-server: hub.docker.com
+         #      username: ${{ secrets.DOCKERHUB_USERNAME }}
+         #      password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+         # - run: |
+         #      docker build . -t contoso.azurecr.io/k8sdemo:${{ github.sha }}
+         #      docker push contoso.azurecr.io/k8sdemo:${{ github.sha }}
+
+         - uses: azure/setup-kubectl@v4
+
+         # Set the target AKS cluster.
+         - uses: Azure/aks-set-context@v4
+           with:
+              creds: '${{ secrets.KUBECONFIG }}'
+              cluster-name: kubernetes
+              # resource-group: contoso-rg
+         - uses: Azure/k8s-deploy@v5
+           with:
+              action: deploy
+              manifests: |
+                 k8s/
