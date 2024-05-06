@@ -75,5 +75,5 @@ resource "aws_eip_association" "sonar_server" {
 
 
 output "sonar_public_ip" {
-  value = aws_instance.sonar_server.public_ip
+  value = data.aws_eip.sonarqube_eip.id
 }

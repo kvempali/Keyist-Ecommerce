@@ -34,10 +34,8 @@ data "aws_eip" "worker_node_eips" {
 
 # Data block to retrieve Elastic IPs for worker nodes
 data "aws_eip" "sonarqube_eip" {
-  count = var.worker_nodes_count
   filter {
     name   = "tag:Environment"
     values = ["sonarqube"]
   }
-}
 }
