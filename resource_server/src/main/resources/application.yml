@@ -28,7 +28,7 @@ spring:
         format_sql: true
   mail:
     host: smtp.freesmtpservers.com
-     host_address: http://15.206.54.35:30080
+    host_address: http://15.206.54.35:30080
     # username: krishna.vempali@gmail.com
     # password: PyRQX7Ws0gIS8G5K
     port: 25
