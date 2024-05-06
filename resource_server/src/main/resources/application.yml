@@ -27,11 +27,11 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
   mail:
-    host: smtp.freesmtpservers.com
+    host: smtp.elasticemail.com
     host_address: http://15.206.54.35:30080
-    # username: krishna.vempali@gmail.com
-    # password: PyRQX7Ws0gIS8G5K
-    port: 25
+    username: krishna.vempali@gmail.com
+    password: 2E123DD3A1601C66E0080AD9B0C5A9D15CBB
+    port: 2525
     # properties:
     #   mail:
     #     smtp:
