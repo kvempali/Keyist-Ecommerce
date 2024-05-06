@@ -68,6 +68,12 @@ resource "aws_security_group" "sonarqube_sg" {
 
 }
 
+resource "aws_eip_association" "sonar_server" {
+  instance_id   = aws_instance.sonar_server.id
+  allocation_id = data.aws_eip.sonarqube_eip.id
+}
+
+
 output "sonar_public_ip" {
   value = aws_instance.sonar_server.public_ip
 }

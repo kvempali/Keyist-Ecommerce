@@ -13,6 +13,13 @@ resource "aws_db_instance" "rds-1" {
   publicly_accessible = true
   allow_major_version_upgrade = true
   apply_immediately = true
+
+    provisioner "remote-exec" {
+    inline = [
+      "mysql -h ${self.address} -u ${var.db-username} -p${var.db-password} < ./files/script.sql"
+    ]
+  }
+
 }
 
 resource "aws_db_subnet_group" "subnet-grp" {

@@ -357,15 +357,6 @@ resource "ansible_host" "kubadm_demo_worker_nodes_host" {
   }
 }
 
-#resource "aws_eip" "control_plane_eip" {
-#  instance = aws_instance.kubeadm_demo_control_plane.id
-#}
-
-#resource "aws_eip" "worker_nodes_eip" {
-#  count = var.worker_nodes_count
-#  instance = aws_instance.kubeadm_demo_worker_nodes[count.index].id
-#}
-
 
 resource "aws_eip_association" "control_plane_eip_association" {
   instance_id   = aws_instance.kubeadm_demo_control_plane.id
