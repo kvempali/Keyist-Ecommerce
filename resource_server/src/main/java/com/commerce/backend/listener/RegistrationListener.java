@@ -30,6 +30,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String message = "Hi ,\n\nPlease confirm your email with this link. ";
 
         SimpleMailMessage email = new SimpleMailMessage();
+        email.setFrom("kvempali1257@outlook.com");
         email.setTo(recipientAddress);
         email.setSubject(subject);
         email.setText(message + "\n\n" + confirmationUrl + "\n\n\nw/ Keyist Team");
