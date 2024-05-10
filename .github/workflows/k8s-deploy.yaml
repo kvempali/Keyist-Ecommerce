@@ -29,3 +29,5 @@ jobs:
            with:
               action: deploy
               manifests: k8s/
+         - name: Deploy Rollout
+           run: kubectl rollout restart deployment keyist-resource-server
