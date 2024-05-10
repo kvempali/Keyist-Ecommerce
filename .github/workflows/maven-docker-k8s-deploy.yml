@@ -52,25 +52,25 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
        run: mvn -B clean install --file authorization_server/pom.xml
-      - name: SonarQube Scan for Authorization Server
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          projectBaseDir: ./authorization_server
-      - name: SonarQube Quality Gate check for authorization server
-        id: sonarqube-quality-gate-check-auth-server
-        uses: sonarsource/sonarqube-quality-gate-action@master
+     - name: SonarQube Scan for Authorization Server
+       uses: sonarsource/sonarqube-scan-action@master
+       env:
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+       with:
+         projectBaseDir: ./authorization_server
+     - name: SonarQube Quality Gate check for authorization server
+       id: sonarqube-quality-gate-check-auth-server
+       uses: sonarsource/sonarqube-quality-gate-action@master
         # Force to fail step after specific time.
-        timeout-minutes: 5
-        env:
+       timeout-minutes: 5
+       env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} #OPTIONAL
-        with:
+       with:
           scanMetadataReportFile: ./authorization_server/.scannerwork/report-task.txt
-        - name: "SonarQube Quality Gate Status value - Authorization Server"
-          run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check-auth-server.outputs.quality-gate-status }}"
+     - name: "SonarQube Quality Gate Status value - Authorization Server"
+       run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check-auth-server.outputs.quality-gate-status }}"
 
 
    docker:
@@ -115,7 +115,6 @@ jobs:
      runs-on: ubuntu-latest
      steps:
        - uses: actions/checkout@v4
-         -
        - uses: azure/setup-kubectl@v4
        # Set the target AKS cluster.
        - uses: azure/k8s-actions/k8s-set-context@master
