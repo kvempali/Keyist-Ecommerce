@@ -134,4 +134,4 @@ jobs:
          run: kubectl rollout restart deployment keyist-auth-server
        - name: Deploy Rollout of UI Client
          continue-on-error: true
-         run: kubectl rollout restart deployment keyist-cleint
+         run: kubectl rollout restart deployment keyist-client
