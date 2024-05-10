@@ -28,7 +28,7 @@ spring:
         format_sql: true
   mail:
     host: smtp-mail.outlook.com
-    host_address: http://15.206.54.35:30080
+    host_address: http://13.202.8.68:30800/
     username: kvempali1257@outlook.com
     password: Summer@2024
     port: 587
