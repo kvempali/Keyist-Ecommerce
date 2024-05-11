@@ -53,3 +53,22 @@ spec:
          value: admin
        - name: SPRING_DATASOURCE_PASSWORD
          value: admin123
+#---
+#apiVersion: autoscaling/v2
+#kind: HorizontalPodAutoscaler
+#metadata:
+#  name: keyist-auth-server
+#spec:
+#  maxReplicas: 5
+#  metrics:
+#    - resource:
+#        name: cpu
+#        target:
+#          averageUtilization: 50
+#          type: Utilization
+#      type: Resource
+#  minReplicas: 2
+#  scaleTargetRef:
+#    apiVersion: apps/v1
+#    kind: Deployment
+#    name: keyist-auth-server

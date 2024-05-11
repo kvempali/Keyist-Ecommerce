@@ -59,3 +59,22 @@ spec:
          value: Test
        - name: SECURITY_AUTH_CLIENT_PASSWORD
          value: test
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: keyist-resource-server
+spec:
+  maxReplicas: 5
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 50
+          type: Utilization
+      type: Resource
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: keyist-resource-server
