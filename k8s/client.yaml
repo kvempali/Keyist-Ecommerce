@@ -15,19 +15,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: keyist-client
- labels:
-   app: keyist-client
+  name: keyist-client
+  labels:
+    app: keyist-client
 spec:
- replicas: 2
- selector:
-   matchLabels:
-     app: keyist-client
- template:
-   metadata:
-     labels:
-       app: keyist-client
-   spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: keyist-client
+  template:
+    metadata:
+      labels:
+        app: keyist-client
+    spec:
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -35,14 +35,14 @@ spec:
           labelSelector:
             matchLabels:
               app: keyist-client
-     containers:
-     - name: keyist-client
-       image: kvempali/keyist-client:latest
-       resources:
-         limits:
-           cpu: 500m
-         requests:
-           cpu: 200m
-       imagePullPolicy: Always
-       ports:
-       - containerPort: 80
+      containers:
+        - name: keyist-client
+          image: kvempali/keyist-client:latest
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
