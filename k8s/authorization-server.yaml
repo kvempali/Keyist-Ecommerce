@@ -28,6 +28,13 @@ spec:
      labels:
        app: keyist-auth-server
    spec:
+     topologySpreadConstraints:
+       - maxSkew: 1
+         topologyKey: kubernetes.io/hostname
+         whenUnsatisfiable: DoNotSchedule
+         labelSelector:
+           matchLabels:
+             app: keyist-auth-server
      containers:
      - name: keyist-auth-server
        image: kvempali/keyist-authorization-server:latest

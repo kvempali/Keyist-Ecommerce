@@ -28,6 +28,13 @@ spec:
      labels:
        app: keyist-client
    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: keyist-client
      containers:
      - name: keyist-client
        image: kvempali/keyist-client:latest
