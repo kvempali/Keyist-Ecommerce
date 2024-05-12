@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --aot --output-hashing=none",
-    "test": "ng test",
+    "test:headless": "ng test --watch=false --code-coverage --source-map=false",
+    "sonar-scanner": "sonar-scanner",
     "lint": "ng lint client --fix",
     "e2e": "ng e2e"
   },
@@ -46,7 +47,9 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "karma-sonarqube-reporter": "^1.4.0",
     "protractor": "~7.0.0",
+    "sonarqube-scanner": "^3.5.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"
