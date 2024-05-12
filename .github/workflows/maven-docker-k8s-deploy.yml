@@ -8,7 +8,7 @@ on:
    #   branches: [ master ]
    workflow_dispatch:
 jobs:
-   build:
+   build-and-test:
      runs-on: ubuntu-latest
      steps:
      - uses: actions/checkout@v2
@@ -73,8 +73,8 @@ jobs:
        run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check-auth-server.outputs.quality-gate-status }}"
 
 
-   docker:
-      needs: build
+   docker-build-and-push:
+      needs: build-and-test
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
@@ -111,7 +111,7 @@ jobs:
             tags: kvempali/keyist-client:latest
 
    deploy:
-     needs: docker
+     needs: docker-build-and-push
      runs-on: ubuntu-latest
      steps:
        - uses: actions/checkout@v4
