@@ -18,6 +18,7 @@ jobs:
       - name: Run client tests with Karma
         continue-on-error: true
         run: |
+         npm install -g angular-cli
          npm install -D karma-sonarqube-reporter
          npm install -D sonarqube-scanner
          ng test
