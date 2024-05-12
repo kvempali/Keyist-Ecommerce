@@ -4,9 +4,9 @@
 name: Keyist CI/CD Pipeline
 
 on:
-   # push:
-   #   branches: [ master ]
-   workflow_dispatch:
+  push:
+    branches: [ master ]
+#   workflow_dispatch:
 jobs:
    build-and-test:
      runs-on: ubuntu-latest
