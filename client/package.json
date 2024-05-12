@@ -5,8 +5,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --aot --output-hashing=none",
-    "test:headless": "ng test --watch=false --code-coverage --source-map=false",
-    "sonar-scanner": "sonar-scanner",
     "lint": "ng lint client --fix",
     "e2e": "ng e2e"
   },
