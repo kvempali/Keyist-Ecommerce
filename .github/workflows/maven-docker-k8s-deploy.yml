@@ -27,7 +27,7 @@ jobs:
          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
        run: mvn -B clean install --file resource_server/pom.xml
      - name: SonarQube Scan for Resource Server
-       uses: sonarsource/sonarqube-scan-action@master
+       uses: sonarsource/sonarqube-scan-action@v2.0.2
        env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -53,7 +53,7 @@ jobs:
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
        run: mvn -B clean install --file authorization_server/pom.xml
      - name: SonarQube Scan for Authorization Server
-       uses: sonarsource/sonarqube-scan-action@master
+       uses: sonarsource/sonarqube-scan-action@v2.0.2
        env:
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
