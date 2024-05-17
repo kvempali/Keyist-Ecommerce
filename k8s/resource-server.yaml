@@ -29,9 +29,9 @@ spec:
        app: keyist-resource-server
    spec:
      topologySpreadConstraints:
-       - maxSkew: 1
+       - maxSkew: 2
          topologyKey: kubernetes.io/hostname
-         whenUnsatisfiable: ScheduleAnyway
+         whenUnsatisfiable: DoNotSchedule
          labelSelector:
            matchLabels:
              app: keyist-resource-server
@@ -40,7 +40,7 @@ spec:
        image: kvempali/keyist-resource-server:latest
        resources:
          limits:
-           cpu: 1000m
+           cpu: 600m
          requests:
            cpu: 500m
        imagePullPolicy: Always
@@ -48,7 +48,7 @@ spec:
        - containerPort: 8080
        env:
        - name: SPRING_DATASOURCE_URL
-         value: jdbc:mysql://terraform-20240512135131900000000005.cvs4iqugy8m9.ap-south-1.rds.amazonaws.com:3306/keyist?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+         value: jdbc:mysql://terraform-20240513070854612700000005.cvs4iqugy8m9.ap-south-1.rds.amazonaws.com:3306/keyist?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
        - name: SPRING_DATASOURCE_USERNAME
          value: admin
        - name: SPRING_DATASOURCE_PASSWORD
@@ -65,7 +65,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: keyist-resource-server
 spec:
-  maxReplicas: 5
+  maxReplicas: 4
   metrics:
     - resource:
         name: cpu

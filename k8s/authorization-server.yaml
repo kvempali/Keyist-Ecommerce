@@ -31,7 +31,7 @@ spec:
      topologySpreadConstraints:
        - maxSkew: 1
          topologyKey: kubernetes.io/hostname
-         whenUnsatisfiable: ScheduleAnyway
+         whenUnsatisfiable: DoNotSchedule
          labelSelector:
            matchLabels:
              app: keyist-auth-server
@@ -40,15 +40,15 @@ spec:
        image: kvempali/keyist-authorization-server:latest
        resources:
          limits:
-           cpu: 1000m
-         requests:
            cpu: 500m
+         requests:
+           cpu: 300m
        imagePullPolicy: Always
        ports:
        - containerPort: 8081
        env:
        - name: SPRING_DATASOURCE_URL
-         value: jdbc:mysql://terraform-20240512135131900000000005.cvs4iqugy8m9.ap-south-1.rds.amazonaws.com:3306/keyist?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+         value: jdbc:mysql://terraform-20240513070854612700000005.cvs4iqugy8m9.ap-south-1.rds.amazonaws.com:3306/keyist?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
        - name: SPRING_DATASOURCE_USERNAME
          value: admin
        - name: SPRING_DATASOURCE_PASSWORD
