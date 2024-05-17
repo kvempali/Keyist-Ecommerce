@@ -6,7 +6,6 @@ name: Keyist CI/CD Pipeline
 on:
   push:
     branches: [ master ]
-#   workflow_dispatch:
 jobs:
    build-and-test:
      runs-on: ubuntu-latest
@@ -21,10 +20,10 @@ jobs:
          cache: maven
      - name: Build Resource Server with Maven
        continue-on-error: true
-       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
-         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+#         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
+#         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
        run: mvn -B clean install --file resource_server/pom.xml
      - name: SonarQube Scan for Resource Server
        uses: sonarsource/sonarqube-scan-action@v2.0.2
@@ -47,10 +46,10 @@ jobs:
        run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check-resource-server.outputs.quality-gate-status }}"
      - name: Build Authorization Server with Maven
        continue-on-error: true
-       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#       env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
+#        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
        run: mvn -B clean install --file authorization_server/pom.xml
      - name: SonarQube Scan for Authorization Server
        uses: sonarsource/sonarqube-scan-action@v2.0.2
